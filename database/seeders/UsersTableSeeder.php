@@ -2,24 +2,30 @@
 
 namespace Database\Seeders;
 
+// database/seeders/UsersTableSeeder.php
+
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UsersTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
-
     {
+        $users = [
+            [
+                'name' => Str::random(10),
+                'email' => Str::random(10) . '@gmail.com',
+                'password' => Hash::make('password'),
+                'email_verified_at' => Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            // Add more users as needed...
+        ];
 
-        DB::table('users')->insert([
-            'name' => Str::random(10),
-            'email' => Str::random(10) . '@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        User::insert($users);
     }
 }
