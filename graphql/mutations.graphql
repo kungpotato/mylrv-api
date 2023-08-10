@@ -1,0 +1,24 @@
+type Mutation {
+    "Create a new user."
+    createUser(
+        "Input data for creating a user."
+        name: String! @rules(apply: ["required", "string"])
+        email: String!
+            @rules(apply: ["required", "email", "unique:users,email"])
+        password: String! @rules(apply: ["required", "min:8"])
+    ): User @create(model: "App\\Models\\User")
+
+    "Update an existing user by ID."
+    updateUser(
+        "User's primary key."
+        id: ID! @rules(apply: ["required", "exists:users,id"])
+        "Input data for updating a user."
+        name: String @rules(apply: ["string"])
+        email: String @rules(apply: ["email", "unique:users,email,id"])
+        password: String @rules(apply: ["min:8"])
+    ): User @update(model: "App\\Models\\User", key: "id")
+
+    "Delete a user by ID."
+    deleteUser("User's primary key." id: ID! @whereKey): Boolean
+        @delete(model: "App\\Models\\User", key: "id")
+}
