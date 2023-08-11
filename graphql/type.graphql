@@ -1,5 +1,5 @@
 "Account of a person who utilizes this application."
-type User {
+type User @guard {
     "Unique primary key."
     id: ID!
 
